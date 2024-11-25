@@ -1,5 +1,4 @@
 import sys
-sys.path.append("./path/to/venv/lib/python3.13/site-packages")
 import os
 import time
 import requests
@@ -7,8 +6,10 @@ import csv
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Configuration
-subscription_key = "EFjqaoBav2yNHQXPYMHDaZSdWtcsNHKJQKQNWN4fYUvrJSh2Tl7rJQQJ99AKACGhslBXJ3w3AAAFACOGbDFA"
-endpoint = "https://vsmumb.cognitiveservices.azure.com/"
+subscription_key = os.getenv("SUBSCRIPTION_KEY")
+endpoint = os.getenv("ENDPOINT")
+if not subscription_key or not endpoint:
+    raise ValueError("Environment variables 'SUBSCRIPTION_KEY' or 'ENDPOINT' are not set.")
 read_url = endpoint + "vision/v3.1/read/analyze"
 image_directory = os.path.join(script_dir, "PS1-TR-Data/images")
 groundtruth_directory = os.path.join(script_dir, "PS1-TR-Data/groundtruth")
